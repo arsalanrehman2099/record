@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Communication Bridge - Login / Signup</title>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+   
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Noto Sans', sans-serif;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #d9e7ff, #f6fbff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        width: 95%;
+        max-width: 450px;
+       padding: 40px 30px;
+        border-radius: 26px;
+        background: rgba(255,255,255,0.45);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    .title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 6px;
+        color: #1f1f1f;
+    }
+
+    .subtitle {
+        font-size: 15px;
+        color: #666;
+        margin-bottom: 25px;
+    }
+
+    /* Tabs */
+    .tabs {
+        display: flex;
+        margin-bottom: 25px;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .tab {
+        flex: 1;
+        padding: 13px 0;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        color: #4a4a4a;
+        background: rgba(255,255,255,0.45);
+        transition: 0.25s ease;
+    }
+
+    .tab.active {
+        background: linear-gradient(135deg, #4a90e2, #72d65a);
+        color: #fff;
+    }
+
+    /* Forms */
+    .form {
+        display: none;
+        animation: fade 0.35s ease;
+    }
+    .form.active {
+        display: block;
+    }
+
+    @keyframes fade {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Floating Input Fields */
+    .input-field {
+        position: relative;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .input-field input,
+    .input-field select {
+        width: 100%;
+        padding: 14px 18px; /* More space on sides */
+        border-radius: 14px;
+        border: 1px solid rgba(0,0,0,0.15);
+        background: rgba(255,255,255,0.75);
+        font-size: 15px;
+        outline: none;
+        transition: 0.2s all ease;
+    }
+
+    .input-field input:focus,
+    .input-field select:focus {
+        border-color: #4a90e2;
+        background: rgba(255,255,255,0.95);
+    }
+
+    .input-field label {
+        position: absolute;
+        top: 50%;
+        left: 18px;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: #777;
+        pointer-events: none;
+        transition: 0.2s ease;
+        background: transparent;
+    }
+
+    /* FLOATING LABEL BEHAVIOR */
+    .input-field input:not(:placeholder-shown) + label,
+    .input-field input:focus + label {
+        top: -8px;
+        left: 12px;
+        background: #f6fbff;
+        padding: 0 6px;
+        font-size: 12px;
+        color: #4a90e2;
+    }
+
+    .input-field select:focus + label,
+    .input-field select:not([value=""]) + label {
+        top: -8px;
+        left: 12px;
+        background: #f6fbff;
+        padding: 0 6px;
+        font-size: 12px;
+        color: #4a90e2;
+    }
+
+    /* Forgot password */
+    .forgot {
+        text-align: right;
+        font-size: 13px;
+        margin-top: 10px;
+    }
+
+    .forgot a {
+        color: #4a90e2;
+        text-decoration: none;
+    }
+
+    /* Terms checkbox */
+    .terms {
+        font-size: 13px;
+        color: #555;
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Button */
+    .primary-btn {
+        width: 100%;
+        padding: 15px;
+        margin-top: 28px;
+        border: none;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #4a90e2, #72d65a);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.25s ease;
+    }
+
+    .primary-btn:hover {
+        transform: scale(1.03);
+    }
+
+    /* MOBILE RESPONSIVE FIXES */
+@media (max-width: 480px) {
+
+    body {
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center; /* keep centered */
+    }
+
+    .card {
+        width: 100%;
+        max-width: 420px;
+        padding: 28px 22px;
+        margin: 0 auto; /* ensure horizontal center */
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+        margin-bottom: 18px;
+    }
+
+    .tabs .tab {
+        padding: 10px 0;
+        font-size: 14px;
+    }
+
+    .input-field {
+        margin-top: 16px;
+    }
+
+    .input-field input,
+    .input-field select {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+
+    .input-field label {
+        font-size: 13px;
+    }
+
+    .primary-btn {
+        padding: 13px;
+        font-size: 15px;
+        margin-top: 22px;
+    }
+}
+
+/* VERY SMALL DEVICES (360px and below) */
+@media (max-width: 360px) {
+
+    .title {
+        font-size: 20px;
+    }
+
+    .tabs .tab {
+        font-size: 13px;
+    }
+
+    .input-field input {
+        padding: 11px 12px;
+        font-size: 13px;
+    }
+
+    .primary-btn {
+        font-size: 14px;
+        padding: 12px;
+    }
+}
+
+    
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="title">Welcome Back</div>
+    <div class="subtitle">AI Communication Bridge</div>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <div id="loginTab" class="tab active">Login</div>
+        <div id="signupTab" class="tab">Signup</div>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm" class="form active">
+        <div class="input-field">
+            <input type="email" placeholder=" " />
+            <label>Email</label>
+        </div>
+
+        <div class="input-field">
+            <input type="password" placeholder=" " />
+            <label>Password</label>
+        </div>
+
+        <div class="forgot">
+            <a href="#">Forgot password?</a>
+        </div>
+
+        <button onclick="location.href = './record.html';" class="primary-btn">Login</button>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" class="form">
+        <div class="input-field">
+            <input type="text" placeholder=" " />
+            <label>Full Name</label>
+        </div>
+
+        <div class="input-field">
+            <input type="email" placeholder=" " />
+            <label>Email</label>
+        </div>
+
+        <div class="input-field">
+            <input type="number" placeholder=" " />
+            <label>Age</label>
+        </div>
+
+        <div class="input-field">
+            <input type="password" placeholder=" " />
+            <label>Password</label>
+        </div>
+
+         <div class="input-field">
+            <input type="password" placeholder=" " />
+            <label>Confirm Password</label>
+        </div>
+
+        <div class="terms">
+            <input type="checkbox" checked />
+            <span>I accept the Terms & Conditions</span>
+        </div>
+
+        <button class="primary-btn">Create Account</button>
+    </div>
+
+</div>
+
+<script>
+    const loginTab = document.getElementById("loginTab");
+    const signupTab = document.getElementById("signupTab");
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+
+    loginTab.onclick = () => {
+        loginTab.classList.add("active");
+        signupTab.classList.remove("active");
+
+        loginForm.classList.add("active");
+        signupForm.classList.remove("active");
+    };
+
+    signupTab.onclick = () => {
+        signupTab.classList.add("active");
+        loginTab.classList.remove("active");
+
+        signupForm.classList.add("active");
+        loginForm.classList.remove("active");
+    };
+</script>
+
+</body>
+</html>
