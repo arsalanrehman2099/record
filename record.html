@@ -202,19 +202,19 @@
 
     <div id="recordBtn" class="record-btn pulse">Start</div>
 
-    <div id="textBox" class="text-box">
+    <!-- <div id="textBox" class="text-box">
         Your speech-to-text result will appear here.
-    </div>
+    </div> -->
 
     <div id="actions" class="action-btns">
-        <button class="btn play-btn">Play Text</button>
-        <button class="btn re-btn">Re-record</button>
+        <button class="btn play-btn">Play Audio</button>
+        <button class="btn re-btn">Display Text</button>
     </div>
 </div>
 
 <script>
     const recordBtn = document.getElementById("recordBtn");
-    const textBox = document.getElementById("textBox");
+    // const textBox = document.getElementById("textBox");
     const actions = document.getElementById("actions");
 
     let recording = false;
@@ -232,7 +232,7 @@
             recordBtn.classList.remove("pulse");
 
             // Show transcript area
-            textBox.style.display = "block";
+            // textBox.style.display = "block";
             actions.style.display = "flex";
             textBox.innerText = "Sample transcript: The detected speech text will be shown here.";
         }
